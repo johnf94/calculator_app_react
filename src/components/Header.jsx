@@ -1,28 +1,66 @@
 import React from 'react'
 import { useState } from 'react'
 
+import { ButtonCal } from './';
+
 const Header = () => {
-  const [result, setResult] = useState(0.0)
+  const buttonsSigns =
+    [
+      ['CE', 'C ', '<-', '/ '],
+      [7, 8, 9, 'X '],
+      [4, 5, 6, '- '],
+      [1, 2, 3, '+ '],
+      ['+-', 0, '. ', '= '],
+      // ['','','',''],
+    ];
+  const [firstNumber, setFirstNumber] = useState(0.0)
+  const [lastNumber, setLastNumber] = useState(0.0)
 
   function numberButton(number) {
-    const newNumber = result * 10 + number;
-    setResult(newNumber)
+    const newNumber = firstNumber * 10 + number;
+    setFirstNumber(newNumber)
   }
 
   function clearOperation() {
-    setResult(0);
+    setFirstNumber(0);
   }
 
-function doOperations() {
-  
-}
+  function doOperations() {
+
+  }
+
+  function calculate(params) {
+
+  }
 
   return (
     <div>
       <h1> Simple Calculator App</h1>
-      <label>{result}</label>
+      <label>{firstNumber}</label>
       <br />
-      <div>
+
+      {buttonsSigns.map((signs, index) => {
+        return (
+          <div key={index}>
+            {signs.map((sign, sIndex) => {
+              return  <ButtonCal key={sIndex} valueButton={sign} />;
+            })}
+          </div>
+        );
+      })}
+
+      {/* {
+        buttonsSigns.map((signs,i) => {
+          signs.map((sign, index) => {
+            // console.log(sign);
+            <ButtonCal valueButton={sign} />
+          })
+        })
+      } */}
+
+
+
+      {/*  <div>
         <button onClick={() => numberButton(7)}>7</button>
         <button onClick={() => numberButton(8)}>8</button>
         <button onClick={() => numberButton(9)}>9</button> 
@@ -43,10 +81,11 @@ function doOperations() {
         <button onClick={() => numberButton(2)}>2</button>
         <button onClick={() => numberButton(3)}>3</button>
         <br />
-      </div>
+      </div> *
       <div>
         <button onClick={() => numberButton(0)}>0</button>
-      </div>
+        <button onClick={calculate}>=</button>
+      </div> */}
 
     </div>
   )
