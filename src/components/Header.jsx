@@ -13,37 +13,69 @@ const Header = () => {
       ['+-', 0, '. ', '= '],
       // ['','','',''],
     ];
-  const [firstNumber, setFirstNumber] = useState(0.0)
-  const [lastNumber, setLastNumber] = useState(0.0)
 
-  function numberButton(number) {
-    const newNumber = firstNumber * 10 + number;
-    setFirstNumber(newNumber)
+  const objSigns = [
+    { name: 'CE', function: () => { clearScreen() } },
+    { name: 'C', function: () => { clearOperation() } },
+    // { name: '<-', function: () => { backSpace() } },
+    { name: '/', function: () => { doOperation('/') } },
+    { name: 'X', function: () => { doOperation('*') } },
+    { name: '-', function: () => { doOperation('-') } },
+    { name: '+', function: () => { doOperation('+') } },
+    // { name: '.', function: () => { insertDot() } },
+    // { name: '=', function: () => { result() } },
+
+  ]
+  const [screenNumber, setScreenNumber] = useState(0.0);
+  const [signToOperate, setSignToOperate] = useState('');
+  const [saveScreenNumber, setSaveScreenNumber] = useState(0.0);
+
+  function clickButton(character) {
+    const numRegex = /^\d+$/;
+    if (numRegex.test(character)) {
+      const newNumber = screenNumber * 10 + character;
+      setScreenNumber(newNumber)
+    } else {
+      const result = objSigns.find(sign => {
+        return sign.name===character.replace(/\s/g, '');
+      });
+      result.function();
+      console.log(saveScreenNumber)
+      // console.log("-"+sign.replace(/\s/g, '')+"-")
+    }
+
+  }
+
+  function doOperation(signToOperate) {
+    setSignToOperate(signToOperate);
+    setSaveScreenNumber(screenNumber);
+    setScreenNumber(0.0)
   }
 
   function clearOperation() {
-    setFirstNumber(0);
+    setScreenNumber(0);    
   }
 
-  function doOperations() {
-
+  function clearScreen() {
+    setScreenNumber(0);
+    setSaveScreenNumber(0);
   }
 
-  function calculate(params) {
-
-  }
+  
+  
 
   return (
     <div>
       <h1> Simple Calculator App</h1>
-      <label>{firstNumber}</label>
+      <label>{screenNumber}</label>
       <br />
 
       {buttonsSigns.map((signs, index) => {
         return (
           <div key={index}>
             {signs.map((sign, sIndex) => {
-              return  <ButtonCal key={sIndex} valueButton={sign} />;
+
+              return <ButtonCal key={sIndex} valueButton={sign} clickButton={clickButton} />;
             })}
           </div>
         );

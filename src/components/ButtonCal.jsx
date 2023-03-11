@@ -1,14 +1,14 @@
 import React from 'react'
-import {Header} from '.';
-
-const ButtonCal = ({valueButton}) => {
 
 
-  function handleNumberButton(valueButton){
-    
+const ButtonCal = ({valueButton, clickButton}) => {
+
+
+  function handleClickButton(valueButton){
+    clickButton(valueButton);
   }
   return (
-    <button onClick={() => handleNumberButton(valueButton)}>{valueButton}</button>
+    <button className='btn' onClick={() => handleClickButton(valueButton)}>{valueButton}</button>
   )
 }
 
