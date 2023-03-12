@@ -17,13 +17,14 @@ const Header = () => {
   const objSigns = [
     { name: 'CE', function: () => { clearScreen() } },
     { name: 'C', function: () => { clearOperation() } },
-    // { name: '<-', function: () => { backSpace() } },
+    { name: '<-', function: () => { backSpace() } },
     { name: '/', function: () => { doOperation('/') } },
     { name: 'X', function: () => { doOperation('*') } },
     { name: '-', function: () => { doOperation('-') } },
     { name: '+', function: () => { doOperation('+') } },
-    // { name: '.', function: () => { insertDot() } },
-    // { name: '=', function: () => { result() } },
+    { name: '+-', function: () => { symbolsPlusMinus('') } },
+    { name: '.', function: () => { insertDot() } },
+    { name: '=', function: () => { result() } },
 
   ]
   const [screenNumber, setScreenNumber] = useState(0.0);
@@ -40,10 +41,22 @@ const Header = () => {
         return sign.name===character.replace(/\s/g, '');
       });
       result.function();
-      console.log(saveScreenNumber)
+      
       // console.log("-"+sign.replace(/\s/g, '')+"-")
     }
 
+  }
+
+  function symbolsPlusMinus() {
+    setScreenNumber(screenNumber*-1) 
+    
+  }
+
+  function backSpace() {
+    
+  }
+  function insertDot() {
+    
   }
 
   function doOperation(signToOperate) {
@@ -61,12 +74,16 @@ const Header = () => {
     setSaveScreenNumber(0);
   }
 
-  
+  function result(callback){
+    const result =0;
+  }
   
 
   return (
     <div>
       <h1> Simple Calculator App</h1>
+      <p>{saveScreenNumber}</p>
+      <p>{signToOperate}</p>
       <label>{screenNumber}</label>
       <br />
 
@@ -80,7 +97,7 @@ const Header = () => {
           </div>
         );
       })}
-
+      <h4>{eval(saveScreenNumber+signToOperate+screenNumber)}</h4>
       {/* {
         buttonsSigns.map((signs,i) => {
           signs.map((sign, index) => {
