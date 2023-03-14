@@ -27,14 +27,14 @@ const Header = () => {
     { name: '=', function: () => { result() } },
 
   ]
-  const [screenNumber, setScreenNumber] = useState(0.0);
+  const [screenNumber, setScreenNumber] = useState('');
   const [signToOperate, setSignToOperate] = useState('');
-  const [saveScreenNumber, setSaveScreenNumber] = useState(0.0);
+  const [saveScreenNumber, setSaveScreenNumber] = useState('');
 
   function clickButton(character) {
     const numRegex = /^\d+$/;
     if (numRegex.test(character)) {
-      const newNumber = screenNumber * 10 + character;
+      const newNumber = screenNumber.toString() + character.toString();
       setScreenNumber(newNumber)
     } else {
       const result = objSigns.find(sign => {
@@ -48,7 +48,7 @@ const Header = () => {
   }
 
   function symbolsPlusMinus() {
-    setScreenNumber(screenNumber*-1) 
+    setScreenNumber(eval(screenNumber*-1).toString()) 
     
   }
 
@@ -56,26 +56,33 @@ const Header = () => {
     
   }
   function insertDot() {
-    
+   const hasDot = screenNumber.includes('.');
+   if(hasDot===false)
+    setScreenNumber(screenNumber+'.')
+
   }
 
   function doOperation(signToOperate) {
     setSignToOperate(signToOperate);
     setSaveScreenNumber(screenNumber);
-    setScreenNumber(0.0)
+    setScreenNumber('')
   }
 
   function clearOperation() {
-    setScreenNumber(0);    
+    setSignToOperate('');
+    setScreenNumber('');    
   }
 
   function clearScreen() {
-    setScreenNumber(0);
-    setSaveScreenNumber(0);
+    setScreenNumber('');
+    setSignToOperate('');
+    setSaveScreenNumber('');
   }
 
   function result(callback){
-    const result =0;
+    const result =eval(saveScreenNumber+signToOperate+screenNumber);
+    setSaveScreenNumber(0);
+    setScreenNumber(result);
   }
   
 
@@ -97,7 +104,7 @@ const Header = () => {
           </div>
         );
       })}
-      <h4>{eval(saveScreenNumber+signToOperate+screenNumber)}</h4>
+      {/* <h4>{eval(saveScreenNumber+signToOperate+screenNumber)}</h4> */}
       {/* {
         buttonsSigns.map((signs,i) => {
           signs.map((sign, index) => {
